@@ -4,6 +4,7 @@ from rest_framework import generics, mixins
 from rest_framework.exceptions import ValidationError
 # from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework import status
 from movies_app.models import Movie, StreamPlatform, Review
@@ -11,19 +12,23 @@ from movies_app.api.serializers import MovieSerializer, StreamPlatformSerializer
 
 
 
-class MovieListAV(APIView):
+class MovieListAV(generics.ListAPIView):
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['active']
     
-    def get(self, request):
-        movies = Movie.objects.all()
-        serializer = MovieSerializer(movies, many=True)
-        return Response(serializer.data)
+    # def get(self, request):
+    #     movies = Movie.objects.all()
+    #     serializer = MovieSerializer(movies, many=True)
+    #     return Response(serializer.data)
     
-    def post(self, request):
-        serializer = MovieSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+    # def post(self, request):
+    #     serializer = MovieSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
         
 
 class MovieDetailsAV(APIView):
@@ -88,6 +93,8 @@ class StreamingDetailAV(mixins.RetrieveModelMixin,
 
 class ReviewListAV(generics.ListAPIView):
     serializer_class = ReviewSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['review_by__username']
     
     def get_queryset(self):
         pk = self.kwargs.get('pk')
@@ -123,6 +130,8 @@ class ReviewDetailAV(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         pk = self.kwargs.get('review_id')
         return Review.objects.get(pk=pk)
+    
+
 
 #-------------------------------------------------------------------------------------------------------------------
 
