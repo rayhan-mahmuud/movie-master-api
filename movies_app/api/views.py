@@ -5,8 +5,9 @@ from rest_framework.exceptions import ValidationError
 # from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
-
+from rest_framework.filters import OrderingFilter
 from rest_framework import status
+
 from movies_app.models import Movie, StreamPlatform, Review
 from movies_app.api.serializers import MovieSerializer, StreamPlatformSerializer, ReviewSerializer
 
@@ -15,9 +16,13 @@ from movies_app.api.serializers import MovieSerializer, StreamPlatformSerializer
 class MovieListAV(generics.ListAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
+    
     permission_classes = [IsAuthenticatedOrReadOnly]
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['active']
+    
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_fields = ['active', 'avg_rating']
+    ordering_fields = ['avg_rating', 'platform','title']
+    ordering = ['avg_rating']
     
     # def get(self, request):
     #     movies = Movie.objects.all()
@@ -61,6 +66,7 @@ class StreamingListAV(mixins.ListModelMixin,
     
     queryset = StreamPlatform.objects.all()
     serializer_class = StreamPlatformSerializer
+    
     permission_classes = [IsAuthenticatedOrReadOnly]
     
     def get(self, request, *args, **kwargs):

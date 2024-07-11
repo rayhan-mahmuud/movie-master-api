@@ -18,22 +18,22 @@ class MovieSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True, read_only=True)
     platform = serializers.StringRelatedField()
     
-    total_reviews = serializers.SerializerMethodField()
-    avg_rating = serializers.SerializerMethodField()
+    # total_reviews = serializers.SerializerMethodField()
+    # avg_rating = serializers.SerializerMethodField()
     
     class Meta:
         model = Movie
         fields = '__all__'
         
-    def get_total_reviews(self, obj):
-        return obj.reviews.count()
+    # def get_total_reviews(self, obj):
+    #     return obj.reviews.count()
     
-    def get_avg_rating(self, obj):
-        if obj.reviews.all() is not None and obj.reviews.count()>0:
-            ratings = [r.rating for r in obj.reviews.all()]
-            return sum(ratings)/obj.reviews.count()
-        else:
-            return 0
+    # def get_avg_rating(self, obj):
+    #     if obj.reviews.all() is not None and obj.reviews.count()>0:
+    #         ratings = [r.rating for r in obj.reviews.all()]
+    #         return sum(ratings)/obj.reviews.count()
+    #     else:
+    #         return 0
             
         
     

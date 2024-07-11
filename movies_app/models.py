@@ -19,6 +19,8 @@ class Movie(models.Model):
     genre = models.CharField(max_length=250)
     storyline = models.CharField(max_length=500)
     platform = models.ForeignKey(StreamPlatform, on_delete=models.CASCADE, related_name='movies')
+    total_reviews = models.IntegerField(default=0)
+    avg_rating = models.DecimalField(decimal_places=2, max_digits=10, default=0)
     created = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     
