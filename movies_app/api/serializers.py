@@ -17,6 +17,11 @@ class MovieSerializer(serializers.ModelSerializer):
     
     reviews = ReviewSerializer(many=True, read_only=True)
     platform = serializers.StringRelatedField()
+    platform_id = serializers.PrimaryKeyRelatedField(
+        queryset=StreamPlatform.objects.all(),
+        source='platform',
+        write_only=True
+    )
     
     # total_reviews = serializers.SerializerMethodField()
     # avg_rating = serializers.SerializerMethodField()

@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework import generics, mixins
 from rest_framework.exceptions import ValidationError
 # from rest_framework.decorators import api_view
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 from rest_framework import status
@@ -13,7 +13,7 @@ from movies_app.api.serializers import MovieSerializer, StreamPlatformSerializer
 
 
 
-class MovieListAV(generics.ListAPIView):
+class MovieListAV(generics.ListCreateAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
     
@@ -113,7 +113,7 @@ class ReviewListAV(generics.ListAPIView):
 class ReviewCreateAV(generics.CreateAPIView):
 
     serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     
     def perform_create(self, serializer):
