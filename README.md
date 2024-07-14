@@ -114,7 +114,13 @@ This API, built with Django Rest Framework, provides endpoints for managing movi
 - **Authentication**: Most endpoints require the user to be authenticated. Ensure to include the authentication token in the request headers.
 - **Status Codes**: Each endpoint returns appropriate HTTP status codes to indicate the result of the request.
 
-
+## Testing:
+- Test cases have been added for all endpoints.
+- Before making any changes to the project, ensure to add new test cases for the changes.
+- Run existing test cases to verify they are working correctly.
+- Use the following command to run tests:
+  ```sh
+  python manage.py test
 ## How to Use this API
 
 To use this API from the repository, follow these steps:
