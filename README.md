@@ -11,8 +11,22 @@ This API, built with Django Rest Framework, provides endpoints for managing movi
 - **Description**: Retrieves a list of all movies.
 - **Response**:
   - `200 OK`: A list of movies.
-
-### 2. Movie Details
+  
+### 2. Create a Movie
+- **URL**: `/movies/`
+- **Method**: `POST`
+- **Description**: Creaate a new movie.
+- **Request Body**:
+  - `title` (string): Name of the movie.
+  - `genre` (string): Genre of the movie.
+  - `storyline` (string): Plot of the movie.
+  - `platform_id` (integer): ID of the Streaming Platform of the movie.
+  - `active` (boolean): Status of the movie. Default value is false.
+- **Response**:
+  - `201 Created`: The created Movie.
+  - `400 Bad Request`: Invalid input.
+  
+### 3. Movie Details
 - **URL**: `/movies/<int:pk>/`
 - **Method**: `GET`
 - **Description**: Retrieves details of a specific movie by its ID.
@@ -24,20 +38,20 @@ This API, built with Django Rest Framework, provides endpoints for managing movi
 
 ## Reviews API
 
-### 3. Create Review for a Movie
+### 1. Create Review for a Movie
 - **URL**: `/movies/<int:pk>/reviews-create/`
 - **Method**: `POST`
 - **Description**: Creates a new review for a specific movie.
 - **Path Parameters**:
   - `pk` (integer): The ID of the movie.
 - **Request Body**:
-  - `content` (string): The content of the review.
+  - `text` (string): The content of the review.
   - `rating` (integer): The rating given to the movie.
 - **Response**:
   - `201 Created`: The created review.
   - `400 Bad Request`: Invalid input.
 
-### 4. List Reviews for a Movie
+### 2. List Reviews for a Movie
 - **URL**: `/movies/<int:pk>/reviews/`
 - **Method**: `GET`
 - **Description**: Retrieves a list of all reviews for a specific movie.
@@ -47,7 +61,7 @@ This API, built with Django Rest Framework, provides endpoints for managing movi
   - `200 OK`: A list of reviews for the specified movie.
   - `404 Not Found`: Movie not found.
 
-### 5. Review Details
+### 3. Review Details
 - **URL**: `/movies/<int:pk>/reviews/<int:review_id>/`
 - **Method**: `GET`
 - **Description**: Retrieves details of a specific review by its ID.
@@ -60,14 +74,26 @@ This API, built with Django Rest Framework, provides endpoints for managing movi
 
 ## Streaming API
 
-### 6. List Streaming Platforms
+### 1. List Streaming Platforms
 - **URL**: `/streaming/`
 - **Method**: `GET`
 - **Description**: Retrieves a list of all streaming platforms.
 - **Response**:
   - `200 OK`: A list of streaming platforms.
+    
+### 2. Create a Streaming Platform
+- **URL**: `/streaming/`
+- **Method**: `POST`
+- **Description**: Creaate a new Streaming Platform
+- **Request Body**:
+  - `name` (string): Name of the Streaming Platform.
+  - `about` (string): Details of the Streaming Platform.
+  - `website` (string): URL of the Streaming Platform.
+- **Response**:
+  - `201 Created`: The created Streaming Platform.
+  - `400 Bad Request`: Invalid input.
 
-### 7. Streaming Platform Details
+### 3. Streaming Platform Details
 - **URL**: `/streaming/<int:pk>/`
 - **Method**: `GET`
 - **Description**: Retrieves details of a specific streaming platform by its ID.
@@ -79,7 +105,7 @@ This API, built with Django Rest Framework, provides endpoints for managing movi
 
 ## Authentication API
 
-### 8. User Login
+### 1. User Login
 - **URL**: `/login/`
 - **Method**: `POST`
 - **Description**: Authenticates a user and returns an authentication token.
@@ -98,6 +124,7 @@ This API, built with Django Rest Framework, provides endpoints for managing movi
   - `username` (string): The desired username.
   - `email` (string): The email address.
   - `password` (string): The desired password.
+  - `password2`(string): COnfirm password by entering again.
 - **Response**:
   - `201 Created`: User registered successfully.
   - `400 Bad Request`: Invalid input.
@@ -145,5 +172,3 @@ To use this API from the repository, follow these steps:
 6. **Access the API**:
    - The API will be available at http://127.0.0.1:8000/.
    - Use tools like curl, Postman, or your frontend application to interact with the endpoints.
-
-
